@@ -1,0 +1,77 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "server (stdio, verbose)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/bin/amstrad-cpc-mcp-debug",
+            "args": ["--verbose"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build (debug, sanitizers)",
+            "setupCommands": [
+                {
+                    "description": "pretty printing for STL containers",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "server with CPC 6128 firmware",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/bin/amstrad-cpc-mcp-debug",
+            "args": [
+                "--verbose",
+                "--model", "cpc6128",
+                "--os-rom", "data/roms/cpc6128-os.rom",
+                "--basic-rom", "data/roms/cpc6128-basic.rom",
+                "--amsdos-rom", "data/roms/amsdos.rom"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build (debug, sanitizers)"
+        },
+        {
+            "name": "debug a test suite",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/debug/tests/${input:testName}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "preLaunchTask": "test",
+            "setupCommands": [
+                {
+                    "description": "pretty printing for STL containers",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "testName",
+            "type": "pickString",
+            "description": "which suite to debug",
+            "options": [
+                "test_audio",
+                "test_json",
+                "test_machine",
+                "test_mcp",
+                "test_png",
+                "test_tape",
+                "test_xcc"
+            ],
+            "default": "test_machine"
+        }
+    ]
+}
